@@ -1,0 +1,24 @@
+node_modules/
+dist/
+.vite/
+*.local
+*.log
+artifacts/
+
+# Local tooling reports and generated files
+.mimosa/
+/DESIGN-CONTRACT.md
+/AGENTS.md
+coverage/
+*.tsbuildinfo
+.DS_Store
+Thumbs.db
+__pycache__/
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+
+# Local environment values; keep distributable examples
+.env
+.env.*
+!.env.example

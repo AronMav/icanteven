@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body { margin: 0; background: #eceee9; }
+      canvas { display: block; width: 1200px; height: 630px; }
+      a { display: inline-block; margin: 24px; color: #303b34; font: 16px 'Golos Text Variable', sans-serif; }
+    </style>
+  </head>
+  <body>
+    <canvas width="1200" height="630" role="img"></canvas>
+    <a download="og-image.png"></a>
+    <script type="module">
+      import '@fontsource-variable/golos-text';
+      import '@fontsource/shantell-sans/cyrillic-400.css';
+      import { copy } from '../src/lib/copy';
+      import { paintPaper } from '../src/lib/paper';
+      await Promise.all([
+        document.fonts.load('600 92px "Golos Text Variable"', copy.brand),
+        document.fonts.load('400 32px "Shantell Sans"', copy.shareLine),
+      ]);
+      const canvas = document.querySelector('canvas');
+      canvas.setAttribute('aria-label', copy.shareImageAlt);
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#eceee9';
+      ctx.fillRect(0, 0, 1200, 630);
+      const paper = document.createElement('canvas');
+      paintPaper(paper, 1152, 582, false);
+      ctx.save();
+      ctx.shadowColor = '#17211828';
+      ctx.shadowBlur = 12;
+      ctx.shadowOffsetY = 5;
+      ctx.drawImage(paper, 24, 24, 1152, 582);
+      ctx.restore();
+      ctx.save();
+      ctx.translate(104, 114);
+      ctx.scale(58 / 32, 58 / 32);
+      ctx.strokeStyle = '#626d65';
+      ctx.lineWidth = 1.4;
+      ctx.lineCap = 'round';
+      ctx.stroke(new Path2D('M5 23C10 24 9 8 16 8C24 8 27 24 20 24C12 24 10 12 17 10C25 8 23 27 28 24'));
+      ctx.restore();
+      ctx.fillStyle = '#303b34';
+      ctx.font = '600 92px "Golos Text Variable"';
+      ctx.letterSpacing = '-5px';
+      ctx.fillText(copy.brand, 104, 290);
+      ctx.font = '400 32px "Shantell Sans"';
+      ctx.letterSpacing = '0px';
+      ctx.fillText(copy.shareLine, 104, 368);
+      const download = document.querySelector('a');
+      download.textContent = copy.downloadPreview;
+      download.href = canvas.toDataURL('image/png');
+      document.body.dataset.ready = 'true';
+    </script>
+  </body>
+</html>

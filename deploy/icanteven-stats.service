@@ -1,0 +1,31 @@
+[Unit]
+Description=icanteven aggregate dispersal counter
+After=network.target
+
+[Service]
+Type=simple
+User=icanteven
+Group=icanteven
+WorkingDirectory=/opt/icanteven/current
+Environment=STATS_DB=/var/lib/icanteven/statistics.sqlite3
+Environment=STATS_ORIGINS=https://xn--b1aahg5aj0byd6a.xn--p1ai
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/usr/bin/gunicorn --config server/gunicorn.conf.py server.stats:application
+Restart=on-failure
+RestartSec=3
+StateDirectory=icanteven
+StateDirectoryMode=0700
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+CapabilityBoundingSet=
+
+[Install]
+WantedBy=multi-user.target
